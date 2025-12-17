@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>les cinémas en France</title>
+<!-- Leaflet CSS (map styling) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<!-- Custom styles -->
+<link rel="stylesheet" href="styles.css">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- === Sidebar 1: thematic navigation === -->
+<header class="header_1" id="header_1">
+  <h1>comment choisir mon cinéma ?</h1>
+</header>
+<!-- === Sidebar 2: spatial navigation === -->
+<header class="header_2" id="header_2">
+  <h1>quel cinéma près de chez moi ?</h1>
+</header>
+<main>
+  <!-- === Map container (Leaflet renders here) === -->
+  <div id="map"></div>
+  <!-- === Spatial search menu (hidden by default) === -->
+  <div id="spatial_menu" class="spatial-menu hidden">
+    <label>rechercher un ville ou numéro de département :</label>
+    <input type="text" id="search_place" placeholder="Ex : Paris ou 75">
+    <ul id="suggestions" class="suggestions-list"></ul>
+    <button id="resetFilter">réinitialiser la sélection</button>
+  </div>
+  <!-- === Cinema information window === -->
+  <div id="cinemaInfo" class="cinema-info hidden"></div>
+  <!-- === Tutorial step 0 === -->
+  <div id="tutorial_phase0" class="tutorial hidden">
+    <button class="close-btn" onclick="closeTutorial('phase0')">×</button>
+    <h2>Étape 1: exploration spatiale</h2>
+    <p>Cliquez sur les barres de navigation à gauche de l'écran pour débuter l'exploration spatiale et thématique des salles de cinéma en France.</p>
+    <p>Commencez par découvrir les salles de cinéma qui se trouvent proches de vous.</p>
+  </div>
+  <!-- === Tutorial step 1 === -->
+  <div id="tutorial_phase1" class="tutorial hidden">
+    <button class="close-btn" onclick="closeTutorial('phase1')">×</button>
+    <h2>Étape 2: exploration thématique</h2>
+    <p>Une fois les salles proches sélectionnées, choisissez celle qui vous correspond en cliquant sur la barre de navigation à gauche.</p>
+    <p>Explorez les lieux selon leur taille, programmation... et recommencez en cliquant à droite !</p>
+  </div>
+</main>
+<!-- === Leaflet JS (map engine) === -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- === Custom script === -->
+<script src="script.js"></script>
+</body>
+</html>
