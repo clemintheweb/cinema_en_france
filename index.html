@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Tourney:wght@400;500;700;800&family=Jura:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<title>les cinémas en France</title>
+
+<style>
+
+/* -----------------------------------------------------
+   RESET & BASE
+----------------------------------------------------- */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+
+/* -----------------------------------------------------
+   CADRE DU TEXTE BICOLORE
+----------------------------------------------------- */
+.title-wrapper {
+  position: absolute;
+  top: 10%;
+  right: 17.5%;
+  width: 75vw;
+  height: auto;
+  pointer-events: none;
+  z-index: 999;
+}
+
+
+/* -----------------------------------------------------
+   TEXTE BICOLORE
+----------------------------------------------------- */
+.text {
+  position: absolute;
+  width: 100%;
+  text-align: right;
+  pointer-events: none;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: "Jura", sans-serif;
+}
+
+/* Couleurs */
+.text.black  { color: #1A1A17; }
+.text.white { color: #D0FFFD; }
+
+/* Hiérarchie typographique */
+.text.black h1,
+.text.white h1 {
+  font-weight: 700;
+  font-size: 6rem;
+}
+
+.text.black h2,
+.text.white h2 {
+  font-weight: 500;
+  font-size: 2.6rem;
+}
+
+.text.black h3,
+.text.white h3 {
+  font-family: "Jura", sans-serif;
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+
+/* -----------------------------------------------------
+   TEXTE TUTO VERTICAL
+----------------------------------------------------- */
+.slide-tuto {
+  position: fixed;
+  bottom: 10%;
+  right: 3%;
+  width: 90vw;
+  height: auto;
+  transform: rotate(0deg);
+
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  flex-direction: column;
+
+  font-family: "Jura", sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+  color: #2C2C26;
+
+  z-index: 99999;
+}
+
+
+/* -----------------------------------------------------
+   PANELS PLEIN ÉCRAN
+----------------------------------------------------- */
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.left-panel {
+  width: 82vw;
+  background: #1A1A17;
+  color: #D0FFFD;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 2rem;
+}
+
+.divider {
+  width: 8px;
+  background: #1A1A17;
+  cursor: grab;
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+
+.divider-hitbox {
+  position: absolute;
+  top: 0;
+    height: 100%;
+  bottom: 0;
+  width: 100px;
+  margin-left: -16px; /* centrer autour des 8px du divider */
+  cursor: grab;
+  z-index: 99999;
+}
+
+.right-panel {
+  flex: 1;
+  width: 5vw;
+  background: #D0FFFD;
+  color: #1A1A17;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 2rem;
+}
+    
+/* -----------------------------------------------------
+   BOUTON CARTE
+----------------------------------------------------- */
+.start-btn {
+  padding: 1rem 2.5rem;
+  background: transparent;
+  color: #1A1A17;
+  border: 2px solid #1A1A17;
+
+  font-family: "Jura", sans-serif;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s;
+  position: fixed;
+  top: 25%;
+  left: 12%;
+  width: 30vw;
+  height: 50vh;
+    min-height: 4rem;
+  z-index: 99999;
+}
+
+.start-btn:hover {
+  transform: translateX(8px);
+  background: #1A1A17;
+  color: #D0FFFD;
+}
+
+
+/* -----------------------------------------------------
+   MODULATION POUR PETITS ECRANS
+----------------------------------------------------- */
+/* Petits ordinateurs : largeur entre 1001px et 1500px */
+@media (max-width: 1500px) and (min-width: 1001px) {
+
+  /* Réduction des titres */
+  .text.black h1,
+  .text.white h1 {
+    font-size: 4rem;
+  }
+
+  .text.black h2,
+  .text.white h2 {
+    font-size: 2rem;
+  }
+
+  .text.black h3,
+  .text.white h3 {
+    font-size: 1.6rem;
+  }
+
+  /* Réduction du wrapper titre */
+  .title-wrapper {
+    top: 7%;
+    right: 10%;
+    width: 70vw;
+  }
+
+  /* Bouton Start réduit */
+  .start-btn {
+    width: 20vw;
+    height: 30vh;
+    font-size: 1.1rem;
+    padding: 0.8rem 1.2rem;
+    top: 25%;   /* tu peux l’ajuster */
+  }
+    
+      .slide-tuto {
+    font-size: 1.2rem;
+
+    position: fixed;
+    right: 0.1rem;
+    bottom: 28%;
+
+    transform: translateX(-50%);
+    width: auto;
+    max-height: 60vh;
+
+    writing-mode: vertical-rl;
+    text-align: center;
+
+    z-index: 99999;
+    pointer-events: none;
+  }
+    .left-panel {
+    width: 82%;
+    }   
+
+    .right-panel {
+        flex: 1;
+    }
+
+}
+
+/* ============================
+   MOBILE RESPONSIVE ( < 1000px )
+   ============================ */
+
+@media (max-width: 1000px) {
+
+  html, body {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* --- Réorganisation globale --- */
+  .container {
+    flex-direction: column;      /* Panels empilés */
+    height: 100vh;
+  }
+
+  /* --- Partie noire en haut --- */
+  .left-panel {
+    width: 100vw !important;
+    height: 50vh;
+    order: 1;                   /* En premier */
+    background: #1A1A17;        /* Noir */
+  }
+
+  /* --- Partie blanche en bas --- */
+  .right-panel {
+    width: 100vw !important;
+    height: 50vh;
+    order: 2;                   /* En second */
+    background: #D0FFFD;        /* Blanc */
+    position: relative;
+  }
+
+  /* --- Désactivation slider --- */
+  .divider,
+  .divider-hitbox {
+    display: none !important;
+  }
+
+  /* --- Titre placé DANS LA PARTIE NOIRE --- */
+  .title-wrapper {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+    text-align: center;
+    z-index: 9999;
+  }
+
+  .text.black h1,
+  .text.white h1 { font-size: 2.2rem !important; }
+
+  .text.black h2,
+  .text.white h2 { font-size: 1.2rem !important; }
+
+  .text.black h3,
+  .text.white h3 { font-size: 1rem !important; }
+
+  /* Supprimer l'effet bicolore (inutile mobile) */
+  .text.white,
+  .text.black {
+    clip-path: none !important;
+  }
+
+  /* --- Bouton placé en bas dans la partie blanche --- */
+  .start-btn {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+
+    width: 70vw !important;
+    height: auto !important;
+    min-height: 2rem;
+
+    bottom: 5% !important;
+    top: auto !important;
+
+    padding: 0.8rem 1.2rem;
+    text-align: center;
+    z-index: 9999;
+  }
+    
+      /* --- Tutoriel supprimé --- */
+  .slide-tuto {
+    display: none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+
+<!-- -----------------------------------------------------
+     PANELS FULLSCREEN
+----------------------------------------------------- -->
+<div class="container" id="container">
+  <div class="left-panel" id="leftPanel"></div>
+  <div class="divider" id="divider"></div>
+    <div class="divider-hitbox" id="dividerHitbox"></div>
+  <div class="right-panel"></div>
+</div>
+
+
+<!-- -----------------------------------------------------
+     TEXTE TITRE
+----------------------------------------------------- -->
+<div class="title-wrapper">
+
+  <div id="textBlack" class="text black">
+    <h1>les cinémas <br> en France</h1>
+    <h2>dans notre espace de vie <br> et dans toute leur diversité</h2>
+    <h3>cartographie ludique et exploratoire <br> des salles obscures françaises</h3>
+  </div>
+
+  <div id="textWhite" class="text white">
+    <h1>les cinémas <br> en France</h1>
+    <h2>dans notre espace de vie <br> et dans toute leur diversité</h2>
+    <h3>cartographie ludique et exploratoire <br> des salles obscures françaises</h3>
+  </div>
+
+</div>
+
+
+<!-- -----------------------------------------------------
+     TEXTE EXPLICATION SLIDE
+----------------------------------------------------- -->
+<div class="slide-tuto">
+  <p>glisser la bande blanche vers la gauche de l'écran</p>
+</div>
+
+
+<!-- -----------------------------------------------------
+     BOUTON CARTE
+----------------------------------------------------- -->
+<button class="start-btn" onclick="location.href='map/map.html'">
+  carte des salles de cinémas en France
+</button>
+
+
+<!-- -----------------------------------------------------
+     SCRIPT DU SLIDER
+----------------------------------------------------- -->
+<script>
+const divider = document.getElementById("divider");
+const dividerHitbox = document.getElementById("dividerHitbox");
+const leftPanel = document.getElementById("leftPanel");
+const container = document.getElementById("container");
+
+const textBlack = document.getElementById("textBlack");
+const textWhite = document.getElementById("textWhite");
+const titleWrapper = document.querySelector(".title-wrapper");
+
+let dragging = false;
+
+const MIN_PERCENT = 5;
+
+/* -----------------------------
+   DRAG START / END
+----------------------------- */
+divider.addEventListener("mousedown", startDrag);
+dividerHitbox.addEventListener("mousedown", startDrag);
+document.addEventListener("mouseup", stopDrag);
+
+divider.addEventListener("touchstart", startDrag);
+dividerHitbox.addEventListener("touchstart", startDrag);
+document.addEventListener("touchend", stopDrag);
+
+function startDrag() {
+  dragging = true;
+  document.body.style.cursor = "grab";
+}
+
+function stopDrag() {
+  dragging = false;
+  document.body.style.cursor = "default";
+}
+
+/* -----------------------------
+   SLIDERS
+----------------------------- */
+function updateSlider(clientX) {
+  const rect = container.getBoundingClientRect();
+  const titleRect = titleWrapper.getBoundingClientRect();
+
+  let x = clientX - rect.left;
+
+  const minX = rect.width * MIN_PERCENT / 100;
+  const maxX = titleRect.right - rect.left;
+
+  if (x < minX) x = minX;
+  if (x > maxX) x = maxX;
+
+  /* PANNEAUX */
+  leftPanel.style.width = `${x}px`;
+  divider.style.transform = `translateX(${x}px)`;
+  dividerHitbox.style.transform = `translateX(${x}px)`;
+
+  /* TEXTE */
+  const clipLeft = Math.max(0, x - (titleRect.left - rect.left));
+  const clipRight = Math.max(0, (titleRect.right - rect.left) - x);
+
+  textBlack.style.clipPath = `inset(0 0 0 ${clipLeft}px)`;
+  textWhite.style.clipPath = `inset(0 ${clipRight}px 0 0)`;
+}
+
+/* -----------------------------
+   MOVE
+----------------------------- */
+document.addEventListener("mousemove", e => {
+  if (!dragging) return;
+  updateSlider(e.clientX);
+});
+
+document.addEventListener("touchmove", e => {
+  if (!dragging) return;
+  updateSlider(e.touches[0].clientX);
+});
+
+window.addEventListener("load", () => {
+  const rect = container.getBoundingClientRect();
+  updateSlider(rect.width * 0.82);
+});
+
+window.addEventListener("resize", () => {
+  const rect = container.getBoundingClientRect();
+  updateSlider(rect.width * 0.82);
+});
+
+</script>
+
+
+</body>
+</html>
