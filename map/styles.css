@@ -165,6 +165,16 @@ html, body {
 
 /* ---------- BARRES DANS CINEMA INFO ---------- */
 
+/* pop up au survol de la map */
+.leaflet-popup-content-wrapper.cinema-hover-popup {
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--main-white);
+  color: var(--main-black);
+  font-family: var(--font-main);
+}
+
 .films-bar-container {
   margin-top: 10px;
 }
@@ -179,12 +189,12 @@ html, body {
 }
 
 .films-bar-ae {
-  background-color: #2e86de;
+  background-color: #00CC00;
   height: 100%;
 }
 
 .films-bar-non-ae {
-  background-color: #e74c3c;
+  background-color: #00CC99;
   height: 100%;
 }
 
@@ -197,11 +207,11 @@ html, body {
 }
 
 .films-bar-legend .ae {
-  color: #2e86de;
+  color: #00CC00;
 }
 
 .films-bar-legend .non-ae {
-  color: #e74c3c;
+  color: #00CC99;
 }
 
 /*---------------------------------------------*/
@@ -238,7 +248,7 @@ html, body {
 /* barre sélectionnée */
 .ae-bar.active {
   width: 100%;
-  background-color: #2e86de;
+  background-color: #00CCFF;
 }
 
 /* barres non sélectionnées */
