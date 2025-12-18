@@ -134,6 +134,31 @@ function showPoints(filteredData = null) {
         layer.on("add", updateCursor);
         header1.addEventListener("click", updateCursor);
         header2.addEventListener("click", updateCursor);
+          
+          layer.on("mouseover", (e) => {
+    const bothHeadersRight =
+      header1.classList.contains("right") &&
+      header2.classList.contains("right");
+
+    if (bothHeadersRight) {
+      const popup = L.popup({
+        closeButton: false,
+        offset: L.point(0, -10),
+        className: "cinema-hover-popup"
+      })
+        .setLatLng(e.latlng)
+        .setContent(`<strong>${feature.properties.nom_etablissement}</strong>`)
+        .openOn(map);
+    }
+  });
+
+  layer.on("mouseout", () => {
+    const bothHeadersRight =
+      header1.classList.contains("right") &&
+      header2.classList.contains("right");
+
+    if (bothHeadersRight) map.closePopup();
+  });
       }
     }).addTo(map);
   }
@@ -283,7 +308,6 @@ html += `
 `;
     
 // label
-// Texte selon le label AE
 if (properties.label_AE === "OUI") {
   html += `<p class="ae-title">Catégorie du label Art & Essai</p>`;
 } else {
@@ -314,10 +338,10 @@ html += `
     
 // pie chart des pdm
 const pieData = [
-  { label: "Films français", value: properties.pdm_filmFR, color: "#3498db" },
-  { label: "Films américains", value: properties.pdm_filmUS, color: "#e74c3c" },
-  { label: "Films européens", value: properties.pdm_filmEU, color: "#f1c40f" },
-  { label: "Autres films", value: properties.pdm_filmMO, color: "#9b59b2" }
+  { label: "Films français", value: properties.pdm_filmFR, color: "#99A3A4" },
+  { label: "Films américains", value: properties.pdm_filmUS, color: "#E67E22" },
+  { label: "Films européens", value: properties.pdm_filmEU, color: "#27AE60" },
+  { label: "Autres films", value: properties.pdm_filmMO, color: "#AF7AC5" }
 ];
 
 html += `
@@ -340,6 +364,10 @@ html += `
     </div>
   </div>
 `;
+    
+// texte de fin
+  html += `<p class="texte_fin">  Si ce cinéma vous intéresse, nous vous invitons fortement à vous diriger vers son site internet
+    </p>`;
 
     
   html += "</ul>";
@@ -437,13 +465,16 @@ header1.addEventListener("click", () => {
 // Références DOM
 const tutorial0 = document.getElementById("tutorial_phase0");
 const tutorial1 = document.getElementById("tutorial_phase1");
+const tutorial2 = document.getElementById("tutorial_phase2");
 
 // Flags de fermeture permanente
 let t0Closed = false;
 let t1Closed = false;
+let t2Closed = false;
 
 tutorial0.classList.add("hidden");
 tutorial1.classList.add("hidden");
+tutorial2.classList.add("hidden");
 
 // Fonction centrale : gère l’état d’affichage
 function updateTutorials() {
@@ -453,6 +484,7 @@ function updateTutorials() {
 
     const inPhase0 = !h1Right && !h2Right;   // rien ouvert
     const inPhase1 = h2Right && !h1Right;    // spatial (header2) ouvert, thematic (header1) fermé
+    const inPhase2 = h2Right && h1Right;    // spatial (header2) ouvert, thematic (header1) ouvert
 
     // ----- Phase 0 : tutoriel d’accueil -----
     if (inPhase0 && !t0Closed) {
@@ -460,12 +492,19 @@ function updateTutorials() {
     } else {
         tutorial0.classList.add("hidden");
     }
-
-    // ----- Phase 1 : exploration thématique -----
+    
+     // ----- Phase 1 : exploration spatiale -----
     if (inPhase1 && !t1Closed) {
         tutorial1.classList.remove("hidden");
     } else {
         tutorial1.classList.add("hidden");
+    }
+
+    // ----- Phase 2 : exploration thématique -----
+    if (inPhase2 && !t2Closed) {
+        tutorial2.classList.remove("hidden");
+    } else {
+        tutorial2.classList.add("hidden");
     }
 }
 
@@ -477,6 +516,7 @@ document.addEventListener("click", (e) => {
 
         if (box.id === "tutorial_phase0") t0Closed = true;
         if (box.id === "tutorial_phase1") t1Closed = true;
+        if (box.id === "tutorial_phase2") t2Closed = true;
 
         box.classList.add("hidden");
     }
@@ -490,5 +530,3 @@ header2.addEventListener("click", updateTutorials);
 window.addEventListener("load", () => {
     updateTutorials(); 
 });
-
-
